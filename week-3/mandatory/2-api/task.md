@@ -10,7 +10,7 @@ To submit you should open a pull request with all of your code in this folder.
 
 In the following homework, you will create new API endpoints in the NodeJS application `cyf-ecommerce-api` that you created for last week homework for the Database 2 class.
 
-- If you don't have it already, add a new GET endpoint `/products` to load all the product names along with their supplier names.
+<!-- - If you don't have it already, add a new GET endpoint `/products` to load all the product names along with their supplier names. -->
 
 - Update the previous GET endpoint `/products` to filter the list of products by name using a query parameter, for example `/products?name=Cup`. This endpoint should still work even if you don't use the `name` query parameter!
 
