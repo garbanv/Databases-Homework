@@ -54,6 +54,24 @@ app.get("/products/:productName", function (req, res) {
       .catch((e)=> console.error(e));
 })
 
+app.post("/products",(req,res)=>{
+  const {product_name,unit_price,supplier_id} = req.body;
+
+  pool
+    .query("SELECT * FROM suppliers WHERE id=$1",[supplier_id])
+    .then(response=>{
+      if (response.rowCount >0){
+        pool 
+        .query('INSERT INTO products (product_name,unit_price,supplier_id) VALUES ($1,$2,$3)',[product_name,unit_price,supplier_id])
+        .then(response=> res.status(201).json("Product added"))
+        .catch((e)=> console.error(e));
+      } else {
+          res.json("The suppliers does not exists")
+      }
+    })
+    .catch((e)=>console.error(e));
+})
+
 
 app.post("/customers/:customerId/orders", (req,res)=>{
     let customerId=req.params.customerId;
@@ -66,10 +84,22 @@ app.post("/customers/:customerId/orders", (req,res)=>{
                 pool.query("INSERT INTO orders (order_date,order_reference,customer_id) VALUES ($1,$2,$3)", [orderDate,orderReference, customerId])
                     .then(result=>res.status(201).json("Creado con exito"))
             } else {
-                return res.status(400).json("Something went wrong")
+                return res.status(400).json("User not in database")
             }
         })
         .catch((e=>console.error(e)))
 })
 
+app.delete("/customers/:customerId", (req,res)=>{
+  const customerId=req.params.customerId;
+  pool  
+  .query("DELETE FROM customers where id=$1",[customerId])
+  .then(response=>res.status(200).json("Customer deleted"))
+  .catch((e=>console.error(e)))
+})
+
+
+app.put("/customers/:customersId",(req,res)=>{
+  const {name,address,city,country} = req.body;
+})
 app.listen(3500, () => console.log('server active'));

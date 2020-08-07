@@ -58,5 +58,15 @@ Once you understand the database that you are going to work with, solve the foll
 <!-- select product_name,unit_price,quantity from products join order_items on products.id=order_items.product_id  join orders on orders.id=order_items.order_id where order_reference ='ORD006';  -->
 
 11. Retrieve all the products with their supplier for all orders of all customers. The result should only contain the columns `name` (from customer), `order_reference` `order_date`, `product_name`, `supplier_name` and `quantity`.
+<!-- select name,order_reference,order_date,product_name,supplier_name,quantity from customers 
+join orders on customers.id=orders.customer_id
+join order_items on orders.id = order_items.order_id 
+join products on products.id = order_items.product_id 
+join suppliers on suppliers.id = products.supplier_id  -->
 
 12. Retrieve the names of all customers who bought a product from a supplier from China.
+<!-- select name from customers 
+join orders on customers.id=orders.customer_id
+join order_items on orders.id = order_items.order_id 
+join products on products.id = order_items.product_id 
+join suppliers on suppliers.id = products.supplier_id where suppliers.country ='China' -->
